@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Walker Community Supermarket</title>
+  <link rel="stylesheet" href="../CSS/Supermarket.css">
+  <script src="/js/Settings.js" defer></script>
+  <style>
+    /* Ensure text and elements are visible with different themes */
+    body, header, main, footer {
+      transition: background-color 0.3s, color 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <span>
+        <p>Walker Community Supermarket</p>
+      </span>
+      <nav>
+        <ul>
+          <li><a href="index.php">Home</a></li>
+          <li><a href="../HTML/Information.html">Information</a></li>
+          <li><a href="../HTML/Contact.html">Contact</a></li>
+          <div class="account-profile">
+            <div class="dropdown">
+              <div class="user-icon">
+                <img src="../Img/default-profile.png" alt="User Profile" id="user-profile-pic">
+              </div>
+              <div class="dropdown-content">
+                <a href="#">My Profile</a>
+                <a href="../HTML/Settings.html">Settings</a>
+                <a href="#">Login</a>
+                <a href="#">Logout</a>
+              </div>
+            </div>
+          </div>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Settings</h2>
+      <div class="settings-container">
+        <div class="theme-settings">
+          <h3>Change Background Theme</h3>
+          <select id="Background">
+            <option value="">Select Color</option>
+            <option value="black">Dark</option>
+            <option value="gray">Gray</option>
+            <option value="blue">Blue</option>
+            <option value="white">White</option>
+          </select>
+          <button id="save-theme">Save Theme</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  
+  <script>
+    // Get references to DOM elements
+    const select = document.getElementById('Background');
+    const saveButton = document.getElementById('save-theme');
+
+    // Load the saved theme from localStorage on page load
+    window.addEventListener('load', () => {
+      const savedTheme = localStorage.getItem('websiteTheme');
+      if (savedTheme) {
+        applyTheme(savedTheme); // Apply the saved theme
+        select.value = savedTheme; // Update the select dropdown
+      }
+    });
+
+    // Listen for theme changes
+    select.addEventListener('change', (event) => {
+      const color = event.target.value;
+      applyTheme(color); // Apply the selected theme
+    });
+
+    // Save the selected theme to localStorage
+    saveButton.addEventListener('click', () => {
+      const selectedTheme = select.value;
+      if (selectedTheme) {
+        localStorage.setItem('websiteTheme', selectedTheme);
+        alert('Theme saved successfully!');
+      } else {
+        alert('Please select a theme before saving.');
+      }
+    });
+
+    // Function to apply a theme
+    function applyTheme(color) {
+      document.body.style.backgroundColor = color;
+
+      // Adjust text colors for visibility on darker backgrounds
+      if (color === 'black' || color === 'gray') {
+        document.body.style.color = 'white';
+        document.querySelector('header').style.color = 'white';
+      } else {
+        document.body.style.color = 'black';
+        document.querySelector('header').style.color = 'black';
+      }
+    }
+  </script>
+  <footer>
+    <div class="footer-bottom">
+        <p>&copy;2024 Walker Community Supermarket. All rights reserved.</p>
+    </footer>
+</body>
+</html>
